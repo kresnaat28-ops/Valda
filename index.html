@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Congratulations, Valda 🎓❤️</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Sacramento&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        sans: ['Poppins', 'sans-serif'],
+                        handwritten: ['Sacramento', 'cursive'],
+                    },
+                    colors: {
+                        romance: {
+                            warmwhite: '#FAFAF9',
+                            cream: '#F5F5F0',
+                            blush: '#FFF0F2',
+                            rose: '#FDA4AF',
+                            gold: '#E0BB65',
+                            darkgold: '#B8903C',
+                        }
+                    },
+                    animation: {
+                        'gradient-x': 'gradient-x 15s ease infinite',
+                        'float-slow': 'float-slow 8s ease-in-out infinite',
+                        'pulse-glow': 'pulse-glow 3s ease-in-out infinite',
+                        'twinkle': 'twinkle 4s infinite ease-in-out',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @keyframes gradient-x { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+        @keyframes float-slow { 0%, 100% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-10px) rotate(2deg); } }
+        @keyframes pulse-glow { 0%, 100% { opacity: 0.3; transform: scale(1); } 50% { opacity: 0.5; transform: scale(1.03); } }
+        @keyframes twinkle { 0%, 100% { opacity: 0.2; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1.2); } }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.45);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+        .glass-nav {
+            background: rgba(255, 245, 246, 0.65);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #FAFAF9; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #FDA4AF; border-radius: 10px; }
+        [x-cloak] { display: none !important; }
+    </style>
+</head>
+<body 
+    x-data="{ 
+        started: false, 
+        muted: true,
+        adminMode: true,
+        finalRevealed: false,
+        typewriterText: '',
+        fullTypewriter: 'Forever cheering for you.\nForever proud of you.\nForever loving you.',
+        
+        // Persistent Memory Object
+        siteData: {
+            heroTitle: 'Congratulations, Valda 🎓❤️',
+            heroSub: 'Today isn\'t just your graduation...\nToday is proof that every sacrifice, every sleepless night, and every tear has finally become something beautiful.',
+            chap1Text: 'I know this journey wasn\'t easy.\nThere were moments when you wanted to give up,\nmoments when everything felt overwhelming,\nbut somehow...\nyou kept moving forward.',
+            chap1Img: '',
+            milestones: [
+                { id: 0, title: 'The Late Night Research', date: 'October 2025', desc: 'Finding your ground, spending hours filtering literature reviews, drinking infinite cups of coffee with a heart full of uncertainty.', img: '' },
+                { id: 1, title: 'Seminar Hasil Defended', date: 'January 2026', desc: 'The relief of showing your actual hard work, standing strong in front of questions, and proving that your methods held true value.', img: '' },
+                { id: 2, title: 'The Revision Marathons', date: 'March 2026', desc: 'Fixing every paragraph, double-checking annotations, and handling the final stretch before the absolute final defense.', img: '' }
+            ],
+            scrapbook: Array(12).fill().map((_, i) => ({ id: i, text: 'Memory Title Here', img: '' })),
+            cards: [
+                '\'I\'m proud of you.\'',
+                '\'You inspire me.\'',
+                '\'You are stronger than you realize.\'',
+                '\'You deserve every happiness.\'',
+                '\'I\'ll always support your dreams.\'',
+                '\'My heart will stay your safest home.\''
+            ],
+            letterDate: 'July 2026',
+            letterContent: '<p>Dearest Valda,</p><p>Writing this down feels small compared to how much pride fills my chest looking at you today. You conquered the uncertainties, the endless adjustments, and the exhaustion.</p><p>You did it beautifully. Never forget how rare and capable your soul is. Through every milestone, your light never dimmed.</p><p>With all my love and devotion,</p><p class=\'text-romance-rose pt-2 font-semibold\'>Your Biggest Fan</p>',
+            futureText: 'This graduation isn\'t the finish line.\n\nIt\'s the beginning of an even more beautiful journey.\n\nAnd if you\'ll let me...\n\nI\'d love to keep walking beside you.',
+            finalTitle: 'I\'m endlessly proud of you.\nCongratulations on your graduation.',
+            finalSub: 'No matter where life takes us...\nYou\'ll always be one of the greatest blessings in my life.\nI love you.',
+            videoSrc: ''
+        },
+
+        init() {
+            const saved = localStorage.getItem('valda_surprise_data');
+            if (saved) {
+                try { this.siteData = Object.assign({}, this.siteData, JSON.parse(saved)); } catch(e) {}
+            }
+            this.$watch('siteData', value => {
+                localStorage.setItem('valda_surprise_data', JSON.stringify(value));
+            }, { deep: true });
+        },
+
+        handleImageUpload(e, targetCallback) {
+            const file = e.target.files[0];
+            if (!file) return;
+            if (!['image/jpeg', 'image/png', 'image/webp', 'image/svg+xml'].includes(file.type)) {
+                alert('Please upload a valid image file (JPG, PNG, WebP, SVG)');
+                return;
+            }
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                // Auto-compress high-res uploads via HTML5 canvas down to max 1200px width/height
+                const img = new Image();
+                img.onload = () => {
+                    const canvas = document.createElement('canvas');
+                    let width = img.width;
+                    let height = img.height;
+                    const maxDim = 1200;
+                    if (width > maxDim || height > maxDim) {
+                        if (width > height) { height *= maxDim / width; width = maxDim; }
+                        else { width *= maxDim / height; height = maxDim; }
+                    }
+                    canvas.width = width; canvas.height = height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, width, height);
+                    targetCallback(canvas.toDataURL('image/jpeg', 0.8));
+                };
+                img.src = event.target.result;
+            };
+            reader.readAsDataURL(file);
+        },
+
+        handleVideoUpload(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                this.siteData.videoSrc = event.target.result;
+            };
+            reader.readAsDataURL(file);
+        },
+
+        startTypewriter() {
+            let i = 0; this.typewriterText = '';
+            let interval = setInterval(() => {
+                if(i < this.fullTypewriter.length) {
+                    this.typewriterText += this.fullTypewriter.charAt(i); i++;
+                } else { clearInterval(interval); }
+            }, 50);
+        },
+
+        triggerConfetti() {
+            let duration = 5 * 1000; let animationEnd = Date.now() + duration;
+            let interval = setInterval(function() {
+              let timeLeft = animationEnd - Date.now();
+              if (timeLeft <= 0) return clearInterval(interval);
+              confetti({ particleCount: 30, startVelocity: 25, spread: 360, origin: { x: Math.random(), y: Math.random() - 0.2 } });
+            }, 250);
+        }
+    }"
+    class="bg-romance-warmwhite text-slate-700 font-sans antialiased selection:bg-romance-rose selection:text-white custom-scrollbar overflow-x-hidden"
+>
+
+    <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+        <div class="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] rounded-full bg-rose-100 filter blur-[120px] mix-blend-multiply opacity-70 animate-pulse-glow"></div>
+        <div class="absolute bottom-[-10%] right-[-10%] w-[60vw] h-[60vw] rounded-full bg-amber-50 filter blur-[140px] mix-blend-multiply opacity-60 animate-pulse-glow" style="animation-delay: 1.5s;"></div>
+    </div>
+
+    <audio id="bg-music" src="your-romantic-song.mp3" loop></audio>
+
+    <div class="fixed bottom-6 left-6 z-50 flex items-center space-x-3">
+        <button 
+            @click="adminMode = !adminMode" 
+            class="px-4 py-2.5 rounded-full shadow-lg text-xs tracking-wider uppercase font-semibold transition-all duration-300 flex items-center space-x-2 border"
+            :class="adminMode ? 'bg-rose-500 text-white border-rose-400' : 'bg-slate-800 text-white border-slate-700'"
+        >
+            <i class="fa-solid" :class="adminMode ? 'fa-lock-open animate-bounce' : 'fa-key'"></i>
+            <span x-text="adminMode ? 'Admin Mode (On)' : 'Preview Mode'"></span>
+        </button>
+        <div x-show="adminMode" x-cloak class="text-[11px] text-slate-500 bg-white/80 px-3 py-1.5 rounded-full border border-slate-200">
+            ✨ Modifications save automatically!
+        </div>
+    </div>
+
+    <div x-show="started" x-transition class="fixed bottom-6 right-6 z-50">
+        <button 
+            @click="muted = !muted; let audio = document.getElementById('bg-music'); muted ? audio.pause() : audio.play().catch(e=>{});"
+            class="w-12 h-12 rounded-full glass-panel flex items-center justify-center text-romance-darkgold hover:text-romance-rose transition-all duration-300 shadow-md hover:scale-110 border border-white/60"
+        >
+            <i class="fa-solid text-lg" :class="muted ? 'fa-volume-xmark' : 'fa-volume-high animate-pulse'"></i>
+        </button>
+    </div>
+
+    <div x-show="!started" class="fixed inset-0 z-50 flex flex-col items-center justify-center text-center px-4 bg-gradient-to-tr from-romance-blush via-romance-cream to-amber-50">
+        <div class="max-w-2xl transform space-y-8 p-8 md:p-12 glass-panel rounded-3xl shadow-xl border border-white/80 transition-all">
+            <div class="inline-flex items-center justify-center w-16 h-16 bg-white rounded-full shadow-inner text-romance-rose animate-float-slow">
+                <i class="fa-solid fa-graduation-cap text-3xl"></i>
+            </div>
+            
+            <h1 
+                :contenteditable="adminMode" 
+                @blur="siteData.heroTitle = $el.innerText"
+                class="font-serif text-4xl md:text-6xl text-slate-800 tracking-wide font-medium leading-tight outline-none focus:ring-1 focus:ring-rose-300 rounded"
+                x-text="siteData.heroTitle"
+            ></h1>
+            
+            <p 
+                :contenteditable="adminMode" 
+                @blur="siteData.heroSub = $el.innerText"
+                class="text-slate-600 font-light leading-relaxed text-sm md:text-lg max-w-xl mx-auto italic outline-none focus:ring-1 focus:ring-rose-300 rounded whitespace-pre-line"
+                x-text="siteData.heroSub"
+            ></p>
+
+            <div class="pt-4">
+                <button 
+                    @click="started = true; muted = false; let audio = document.getElementById('bg-music'); audio.play().catch(e=>{});"
+                    class="px-8 py-3.5 bg-gradient-to-r from-romance-rose to-amber-200 text-white font-medium tracking-widest uppercase text-xs rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-300"
+                >
+                    Open Your Surprise
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div x-show="started" x-cloak class="relative z-20">
+        
+        <nav class="sticky top-0 z-40 glass-nav">
+            <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+                <a href="#" class="font-serif text-xl tracking-wider text-slate-800 font-semibold italic">Valda's Journey</a>
+                <div class="hidden md:flex space-x-8 text-xs font-medium uppercase tracking-widest text-slate-600">
+                    <a href="#chap1" class="hover:text-romance-rose transition">Chapter 1</a>
+                    <a href="#chap2" class="hover:text-romance-rose transition">Chapter 2</a>
+                    <a href="#chap3" class="hover:text-romance-rose transition">Chapter 3</a>
+                    <a href="#chap4" class="hover:text-romance-rose transition">Chapter 4</a>
+                    <a href="#chap5" class="hover:text-romance-rose transition">Chapter 5</a>
+                    <a href="#chap6" class="hover:text-romance-rose transition">Future</a>
+                </div>
+                <div class="text-romance-rose animate-pulse"><i class="fa-solid fa-heart"></i></div>
+            </div>
+        </nav>
+
+        <section id="chap1" class="min-h-screen py-24 px-6 max-w-5xl mx-auto flex flex-col justify-center items-center relative">
+            <div class="text-center space-y-3 mb-12">
+                <span class="text-xs uppercase tracking-widest text-romance-darkgold font-semibold">Chapter I</span>
+                <h2 class="font-serif text-3xl md:text-5xl text-slate-800 font-light">The Seminar Proposal</h2>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-12 items-center w-full">
+                <div class="space-y-6 md:pr-6">
+                    <p 
+                        :contenteditable="adminMode" 
+                        @blur="siteData.chap1Text = $el.innerText"
+                        class="text-slate-600 font-light leading-relaxed text-base md:text-lg italic whitespace-pre-line outline-none focus:ring-1 focus:ring-rose-300 p-2"
+                        x-text="siteData.chap1Text"
+                    ></p>
+                </div>
+                <div>
+                    <div class="relative group rounded-3xl overflow-hidden glass-panel p-4 shadow-xl">
+                        <div class="relative aspect-[4/5] rounded-2xl flex flex-col items-center justify-center text-center p-6 bg-slate-50 border-2 border-dashed border-rose-200">
+                            
+                            <template x-if="siteData.chap1Img">
+                                <img :src="siteData.chap1Img" class="absolute inset-0 w-full h-full object-cover rounded-2xl">
+                            </template>
+
+                            <div :class="adminMode ? 'absolute inset-0 bg-black/40 flex flex-col items-center justify-center space-y-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300' : 'hidden'">
+                                <label class="cursor-pointer bg-white text-slate-800 px-4 py-2 rounded-full text-xs font-semibold shadow hover:bg-slate-100">
+                                    <i class="fa-solid fa-upload mr-1"></i> Replace Photo
+                                    <input type="file" accept="image/*" class="hidden" @change="handleImageUpload($event, (base64) => siteData.chap1Img = base64)">
+                                </label>
+                                <template x-if="siteData.chap1Img">
+                                    <button @click="siteData.chap1Img = ''" class="bg-red-500 text-white px-4 py-2 rounded-full text-xs font-semibold shadow hover:bg-red-600">Remove</button>
+                                </template>
+                            </div>
+
+                            <template x-if="!siteData.chap1Img && !adminMode">
+                                <div class="text-slate-400 italic text-sm">A beautiful memory parameter goes here.</div>
+                            </template>
+                            <template x-if="!siteData.chap1Img && adminMode">
+                                <div class="pointer-events-none">
+                                    <i class="fa-regular fa-image text-4xl text-romance-rose/60 mb-2"></i>
+                                    <p class="text-xs text-slate-400 uppercase font-medium">Click to Upload Image</p>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="chap2" class="min-h-screen py-24 px-6 max-w-4xl mx-auto">
+            <div class="text-center space-y-3 mb-16">
+                <span class="text-xs uppercase tracking-widest text-romance-darkgold font-semibold">Chapter II</span>
+                <h2 class="font-serif text-3xl md:text-5xl text-slate-800 font-light">The Milestones</h2>
+            </div>
+
+            <div class="relative border-l border-rose-200/60 ml-4 md:ml-32 space-y-16">
+                <template x-for="(milestone, index) in siteData.milestones" :key="milestone.id">
+                    <div class="relative pl-8 md:pl-12">
+                        <div class="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-romance-rose border-4 border-white shadow-sm"></div>
+                        
+                        <div class="grid md:grid-cols-12 gap-6 items-start">
+                            <div class="md:col-span-5 space-y-2">
+                                <h3 :contenteditable="adminMode" @blur="siteData.milestones[index].title = $el.innerText" class="font-serif text-xl font-medium text-slate-800 outline-none" x-text="milestone.title"></h3>
+                                <p :contenteditable="adminMode" @blur="siteData.milestones[index].date = $el.innerText" class="text-sm text-slate-500 italic font-light outline-none" x-text="milestone.date"></p>
+                                <p :contenteditable="adminMode" @blur="siteData.milestones[index].desc = $el.innerText" class="text-sm text-slate-600 font-light leading-relaxed outline-none" x-text="milestone.desc"></p>
+                            </div>
+                            <div class="md:col-span-7">
+                                <div class="relative aspect-[16/10] rounded-xl overflow-hidden shadow-md group bg-slate-50 border border-dashed border-rose-200 flex items-center justify-center">
+                                    <template x-if="milestone.img">
+                                        <img :src="milestone.img" class="absolute inset-0 w-full h-full object-cover">
+                                    </template>
+
+                                    <div :class="adminMode ? 'absolute inset-0 bg-black/40 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition' : 'hidden'">
+                                        <label class="cursor-pointer bg-white text-slate-800 px-3 py-1.5 rounded-full text-xs font-semibold shadow">
+                                            Upload Photo
+                                            <input type="file" accept="image/*" class="hidden" @change="handleImageUpload($event, (base64) => siteData.milestones[index].img = base64)">
+                                        </label>
+                                    </div>
+
+                                    <template x-if="!milestone.img && !adminMode">
+                                        <span class="text-xs text-slate-300 italic">No image placed</span>
+                                    </template>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </section>
+
+        <section id="chap3" class="min-h-screen py-24 px-6 max-w-6xl mx-auto">
+            <div class="text-center space-y-3 mb-16">
+                <span class="text-xs uppercase tracking-widest text-romance-darkgold font-semibold">Chapter III</span>
+                <h2 class="font-serif text-3xl md:text-5xl text-slate-800 font-light">The Luxury Scrapbook</h2>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <template x-for="(item, idx) in siteData.scrapbook" :key="item.id">
+                    <div class="glass-panel p-3 rounded-2xl shadow-md transform transition-all duration-300 hover:-translate-y-2 group bg-white/40">
+                        <div class="relative aspect-square rounded-xl overflow-hidden mb-2 bg-slate-50 border border-dashed border-rose-100 flex items-center justify-center">
+                            <template x-if="item.img">
+                                <img :src="item.img" class="absolute inset-0 w-full h-full object-cover">
+                            </template>
+
+                            <div :class="adminMode ? 'absolute inset-0 bg-black/40 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition' : 'hidden'">
+                                <label class="cursor-pointer bg-white text-slate-800 px-2 py-1 rounded text-[10px] font-semibold shadow">
+                                    Select Image
+                                    <input type="file" accept="image/*" class="hidden" @change="handleImageUpload($event, (base64) => siteData.scrapbook[idx].img = base64)">
+                                </label>
+                            </div>
+                        </div>
+                        <p :contenteditable="adminMode" @blur="siteData.scrapbook[idx].text = $el.innerText" class="text-center text-xs italic font-light text-slate-500 outline-none" x-text="item.text"></p>
+                    </div>
+                </template>
+            </div>
+        </section>
+
+        <section id="chap4" class="py-24 px-6 max-w-5xl mx-auto">
+            <div class="text-center space-y-3 mb-16">
+                <span class="text-xs uppercase tracking-widest text-romance-darkgold font-semibold">Chapter IV</span>
+                <h2 class="font-serif text-3xl md:text-5xl text-slate-800 font-light">Reminders for You</h2>
+            </div>
+
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <template x-for="(cardText, index) in siteData.cards" :key="index">
+                    <div class="glass-panel p-8 rounded-3xl text-center flex flex-col justify-center items-center space-y-4 border border-white hover:bg-white/80 transition duration-300">
+                        <div class="text-romance-rose text-xl"><i class="fa-solid fa-heart"></i></div>
+                        <p :contenteditable="adminMode" @blur="siteData.cards[index] = $el.innerText" class="font-serif text-lg italic text-slate-800 outline-none" x-text="cardText"></p>
+                    </div>
+                </template>
+            </div>
+        </section>
+
+        <section class="py-12 px-6 max-w-4xl mx-auto">
+            <div class="glass-panel p-4 rounded-3xl shadow-xl overflow-hidden bg-white/20">
+                <div class="aspect-video rounded-2xl bg-slate-900 flex flex-col items-center justify-center text-center p-6 text-slate-500 relative">
+                    <template x-if="siteData.videoSrc">
+                        <video :src="siteData.videoSrc" controls class="absolute inset-0 w-full h-full object-cover rounded-2xl"></video>
+                    </template>
+                    
+                    <div :class="adminMode ? 'absolute top-4 right-4 z-30' : 'hidden'">
+                        <label class="cursor-pointer bg-white text-slate-800 px-3 py-1.5 rounded-full text-xs font-semibold shadow hover:bg-slate-100">
+                            <i class="fa-solid fa-video mr-1"></i> Set Custom Video
+                            <input type="file" accept="video/*" class="hidden" @change="handleVideoUpload">
+                        </label>
+                    </div>
+
+                    <template x-if="!siteData.videoSrc">
+                        <div>
+                            <i class="fa-solid fa-film text-4xl text-romance-rose mb-2 animate-pulse"></i>
+                            <p class="text-white text-sm">Cinematic Video Space</p>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </section>
+
+        <section id="chap5" class="min-h-screen py-24 px-6 max-w-3xl mx-auto flex flex-col justify-center">
+            <div class="text-center space-y-3 mb-12">
+                <span class="text-xs uppercase tracking-widest text-romance-darkgold font-semibold">Chapter V</span>
+                <h2 class="font-serif text-3xl md:text-5xl text-slate-800 font-light">A Letter From My Heart</h2>
+            </div>
+
+            <div class="bg-[#FCFAF2] rounded-2xl shadow-xl border border-[#ECE6D2] p-8 md:p-12 relative overflow-hidden">
+                <div class="absolute inset-0 opacity-[0.06] pointer-events-none" style="background-image: linear-gradient(#000 1px, transparent 1px); background-size: 100% 2rem; margin-top: 2.8rem;"></div>
+                <div class="relative z-10 space-y-6">
+                    <div :contenteditable="adminMode" @blur="siteData.letterDate = $el.innerText" class="text-right text-xs italic text-slate-400 outline-none" x-text="siteData.letterDate"></div>
+                    <div 
+                        :contenteditable="adminMode" 
+                        @blur="siteData.letterContent = $el.innerHTML"
+                        class="font-handwritten text-3xl md:text-4xl text-slate-800 leading-relaxed space-y-4 pt-4 outline-none" 
+                        x-html="siteData.letterContent"
+                    ></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="chap6" class="min-h-screen py-24 px-6 relative bg-slate-950 text-white flex flex-col justify-center items-center overflow-hidden">
+            <div class="absolute inset-0 opacity-80 pointer-events-none">
+                <template x-for="i in 30">
+                    <div class="absolute bg-white rounded-full animate-twinkle" :style="`width:2px; height:2px; left:${Math.random()*100}%; top:${Math.random()*100}%; animation-delay:${Math.random()*4}s;`"></div>
+                </template>
+            </div>
+
+            <div class="text-center space-y-3 mb-12 relative z-10">
+                <span class="text-xs uppercase tracking-widest text-amber-300 font-semibold">Chapter VI</span>
+                <h2 class="font-serif text-3xl md:text-5xl text-amber-50 font-light">The Tomorrow</h2>
+            </div>
+
+            <div class="max-w-xl text-center space-y-8 relative z-10 px-4">
+                <p 
+                    :contenteditable="adminMode" 
+                    @blur="siteData.futureText = $el.innerText"
+                    class="font-serif text-lg md:text-2xl text-slate-200 leading-relaxed font-light italic whitespace-pre-line outline-none" 
+                    x-text="siteData.futureText"
+                ></p>
+            </div>
+        </section>
+
+        <section class="min-h-screen py-24 px-6 bg-gradient-to-b from-slate-950 via-rose-950 to-romance-blush flex flex-col justify-center items-center text-center text-white relative overflow-hidden">
+            <div class="max-w-2xl space-y-8 relative z-10 px-4">
+                <div class="text-amber-400 text-3xl animate-bounce"><i class="fa-solid fa-crown"></i></div>
+                
+                <p :contenteditable="adminMode" @blur="siteData.finalTitle = $el.innerText" class="font-serif text-2xl md:text-4xl text-rose-100 leading-relaxed font-medium outline-none" x-text="siteData.finalTitle"></p>
+                <p :contenteditable="adminMode" @blur="siteData.finalSub = $el.innerText" class="text-slate-300 font-light text-sm md:text-base max-w-lg mx-auto tracking-wide outline-none" x-text="siteData.finalSub"></p>
+
+                <div class="pt-6">
+                    <button 
+                        @click="finalRevealed = true; triggerConfetti(); startTypewriter();"
+                        class="w-20 h-20 rounded-full bg-gradient-to-tr from-romance-rose to-amber-300 flex items-center justify-center text-white shadow-2xl hover:scale-110 transition-transform duration-300 relative group"
+                    >
+                        <div class="absolute inset-0 rounded-full bg-rose-400 filter blur-md opacity-50 group-hover:opacity-80 transition"></div>
+                        <i class="fa-solid fa-heart text-3xl relative z-10"></i>
+                    </button>
+                </div>
+
+                <div x-show="finalRevealed" x-transition class="mt-12 p-8 glass-panel rounded-2xl text-slate-800 max-w-md mx-auto">
+                    <p class="font-serif text-xl md:text-2xl font-medium tracking-wide text-slate-800 whitespace-pre-line leading-relaxed" x-text="typewriterText"></p>
+                    <div class="inline-block w-1 h-5 bg-romance-rose animate-pulse ml-1"></div>
+                </div>
+            </div>
+
+            <footer class="absolute bottom-6 left-0 right-0 text-center text-slate-400 text-[11px] tracking-widest uppercase opacity-60">
+                Built with complete devotion for Valda • 2026
+            </footer>
+        </section>
+
+    </div>
+</body>
+</html>
